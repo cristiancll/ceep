@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import NoteList from "./components/NoteList";
+import NoteForm from "./components/NoteForm";
+import {Component} from "react";
+import "./assets/App.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            noteList: []
+        };
+    }
+    createNote(title, text){
+        this.setState({
+            noteList: [...this.state.noteList, {title, text}]
+        });
+    }
+
+    render(){
+        return (
+            <section className="content">
+                <NoteForm createNote={this.createNote.bind(this)}/>
+                <NoteList noteList={this.state.noteList}/>
+            </section>
+        );
+    }
 }
 
 export default App;
