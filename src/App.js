@@ -1,7 +1,7 @@
 import NoteList from "./components/NoteList";
 import NoteForm from "./components/NoteForm";
 import {Component} from "react";
-import "./assets/App.css"
+import "./assets/css/App.css"
 
 class App extends Component {
 
@@ -16,12 +16,17 @@ class App extends Component {
             noteList: [...this.state.noteList, {title, text}]
         });
     }
+    deleteNote(index){
+        let currentList = this.state.noteList;
+        currentList.splice(index, 1);
+        this.setState({noteList: currentList});
+    }
 
     render(){
         return (
             <section className="content">
                 <NoteForm createNote={this.createNote.bind(this)}/>
-                <NoteList noteList={this.state.noteList}/>
+                <NoteList noteList={this.state.noteList} deleteNote={this.deleteNote.bind(this)}/>
             </section>
         );
     }
