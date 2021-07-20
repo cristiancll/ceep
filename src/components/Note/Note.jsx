@@ -14,6 +14,7 @@ class Note extends Component {
                 <header className="note_header">
                     <h3 className="note_h3">{this.props.title}</h3>
                     <DeleteSVG onClick={this.deleteNote.bind(this)}/>
+                    <h4 className="note_h3">{this.props.category}</h4>
                 </header>
                 <p className="note_p">
                     {this.props.text}

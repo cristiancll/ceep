@@ -10,13 +10,13 @@ class App extends Component {
         super();
         this.state = {
             noteList: [],
-            categoryList: ['Trabalho', 'Esportes']
+            categoryList: []
         };
     }
-    createNote(title, text){
+    createNote(title, text, category){
         this.setState({
             ...this.state,
-            noteList: [...this.state.noteList, {title, text}],
+            noteList: [...this.state.noteList, {title, text, category}],
         });
     }
     deleteNote(index){
@@ -37,10 +37,19 @@ class App extends Component {
     render(){
         return (
             <section className="content">
-                <NoteForm createNote={this.createNote.bind(this)}/>
+                <NoteForm 
+                    createNote={this.createNote.bind(this)}
+                    categoryList={this.state.categoryList}
+                />
                 <main className="mainContent">
-                    <CategoryList categoryList={this.state.categoryList} createCategory={this.createCategory.bind(this)}/>
-                    <NoteList noteList={this.state.noteList} deleteNote={this.deleteNote.bind(this)}/>
+                    <CategoryList 
+                        categoryList={this.state.categoryList} 
+                        createCategory={this.createCategory.bind(this)}
+                    />
+                    <NoteList 
+                        noteList={this.state.noteList} 
+                        deleteNote={this.deleteNote.bind(this)}
+                    />
                 </main>
             </section>
         );
