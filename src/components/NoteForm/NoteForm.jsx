@@ -8,6 +8,20 @@ class NoteForm extends Component{
         this._title = "";
         this._text = "";
         this._category = "";
+        this.newCategoryHook = this.newCategory.bind(this);
+        this.state = {categories: []};
+    }
+    
+    
+    componentDidMount() {
+        this.props.categories.hook(this.newCategoryHook);
+    }
+    componentWillUnmount() {
+        this.props.categories.unhook(this.newCategoryHook);
+    }
+
+    newCategory(categories){
+        this.setState({...this.state, categories});
     }
 
     updateTitle(e){
@@ -34,8 +48,8 @@ class NoteForm extends Component{
             <form className="noteForm" onSubmit={this.createNote.bind(this)}>
                 <select className="noteForm_input" onChange={this.updateCategory.bind(this)}>
                     <option/>
-                    {this.props.categoryList.map(category => {
-                        return <option>{category}</option>
+                    {this.state.categories.map((category, index) => {
+                        return <option key={index}>{category}</option>
                     })}
                 </select>
                 <input type="text" placeholder="Título" className="noteForm_input" onChange={this.updateTitle.bind(this)} />

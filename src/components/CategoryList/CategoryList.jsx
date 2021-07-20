@@ -5,9 +5,25 @@ import Note from "../Note";
 
 class CategoryList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.newCategoryHook = this.newCategory.bind(this);
+        this.state = {categories: []};
+    }
+
+    componentDidMount() {
+        this.props.categories.hook(this.newCategoryHook);
+    }
+    componentWillUnmount() {
+        this.props.categories.unhook(this.newCategoryHook);
+    }
+
+    newCategory(categories){
+        this.setState({...this.state, categories});
+    }
     addCategory(e){
-        if(e.key === "Enter"){
-            this.props.createCategory(e.target.value);
+        if(e.key === "Enter" && e.target.value.length > 0){
+            this.props.categories.createCategory(e.target.value);
             e.target.value = "";
         }
     }
@@ -15,7 +31,7 @@ class CategoryList extends Component {
         return (
             <section className="categoryList">
                 <ul className="categoryList_ul">
-                    { this.props.categoryList.map((category, index) => {
+                    { this.state.categories.map((category, index) => {
                         return(
                             <li className="categoryList_li" key={index}>
                                 <Category index={index} category={category}/>
